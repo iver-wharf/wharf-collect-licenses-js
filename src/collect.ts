@@ -127,6 +127,7 @@ export function collectLicenses(opt?: Options) {
       description: '',
     },
     excludePrivatePackages: true,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     exclude: (opt.excludedSPDXLicenses ?? []).join(',') as any, // the @types/license-checker is wrong, it should be a string
     excludePackages: (opt.excludedPackages ?? []).join(';'),
   }, async (err, packages): Promise<void> => {
@@ -135,7 +136,7 @@ export function collectLicenses(opt?: Options) {
       exit(1);
     }
 
-    const errorOnPackage = new Map((opt.errorOnPackageNames ?? []).map(o => [o.name, o.error ?? "package was declared in errorOnPackageNames option"]));
+    const errorOnPackage = new Map((opt.errorOnPackageNames ?? []).map(o => [o.name, o.error ?? 'package was declared in errorOnPackageNames option']));
 
     const packageErrors = Object.values(packages)
       .filter(p => errorOnPackage.has(p.name))
@@ -186,7 +187,7 @@ export function collectLicenses(opt?: Options) {
   });
 }
 
-const printablePackage = (p: checker.ModuleInfo): Record<string, any> => ({
+const printablePackage = (p: checker.ModuleInfo): Record<string, string> => ({
   package: `${p.name}@${p.version}`,
   repo: p.repository,
   licenses: typeof p.licenses === 'string' ? p.licenses : p.licenses.join(', '),

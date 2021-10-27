@@ -1,3 +1,3 @@
-import { collectLicenses } from "./collect";
+import { collectLicenses } from './collect';
 
 collectLicenses();
