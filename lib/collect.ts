@@ -4,33 +4,107 @@ import fs from 'fs';
 import path from 'path';
 import { CachedFetch } from './cached-fetch';
 
-export interface ExcludedPackage {
-  name: string;
-  version: string;
-}
-
 export interface ErrorOnPackage {
   name: string;
   error?: string;
 }
 
+/**
+ * Object of different options used in {@link collectLicenses}
+ */
 export interface Options {
+  /**
+   * Path to folder containing license texts for each package.
+   * Useful when a package does not have a `LICENSE` file but instead embeds
+   * their license inside their `README.md` file, which wharf-collect-licenses
+   * cannot extract from.
+   *
+   * The file names should be the package name + "@" + the full version.
+   *
+   * Reasoning for having the version as required is to ensure you reevaluate
+   * every time the package  updates, just in case they changed license between
+   * the versions.
+   */
   licenseOverridesPath?: string;
+
+  /**
+   * Path to folder containing package.json and node_modules.
+   * @default "." Defaults to the current working directory.
+   */
   packageToCheckPath?: string;
+
+  /**
+   * Where to output the resulting JSON file.
+   * The output is an array of {@link LicensedPackageData}.
+   * @default "./licenses.json" Defaults to licenses.json in the current working directory.
+   */
   outputFilePath?: string;
 
-  excludedPackages?: ExcludedPackage[];
+  /**
+   * List of package name and version for which to exclude from the results.
+   *
+   * The values should be the package name + "@" + the full version.
+   *
+   * Reasoning for having the version as required is to ensure you reevaluate
+   * every time the package  updates, just in case they changed license between
+   * the versions.
+   *
+   * @example
+   * collectLicenses({
+   *   excludedPackages: [
+   *     '@fortawesome/fontawesome-free@5.15.3', // already contains license notice in stylesheets
+   *   ],
+   * });
+   */
+  excludedPackages?: string[];
+
+  /**
+   * List of license SPDX IDs for which to exclude from the results.
+   *
+   * @example
+   * collectLicenses({
+   *   excludedSPDSLicenses: [
+   *     "0BSD", // The 0BSD license requires no attribution.
+   *   ],
+   * });
+   */
   excludedSPDXLicenses?: string[];
 
+  /**
+   * List of package names to throw an error and fail on if the package has not
+   * been excluded. Useful for erroring out on packages that was not excluded
+   * by the {@link excludedPackages} option.
+   *
+   * @example
+   * collectLicenses({
+   *   excludedPackages: [
+   *     '@fortawesome/fontawesome-free@5.15.3', // already contains license notice in stylesheets
+   *   ],
+   *   errorOnPackageNames: [
+   *     { name: '@fortawesome/fontawesome-free', error: 'not sure version also embeds license in stylesheets' },
+   *   ],
+   * });
+   */
   errorOnPackageNames?: ErrorOnPackage[];
+}
+
+export interface LicensedPackageData {
+  name: string;
+  version: string;
+  description?: string;
+  repository?: string;
+  url?: string;
+  licenses: string[];
+  licenseText: string;
 }
 
 const cachedFetch = new CachedFetch();
 
-export function collectLicenses(opt: Options) {
-  opt.outputFilePath = opt.outputFilePath ?? path.resolve(path.join(__dirname, 'licenses.json'));
+export function collectLicenses(opt?: Options) {
+  opt = opt ?? {};
+  opt.outputFilePath = opt.outputFilePath ?? path.join(process.cwd(), 'licenses.json');
   opt.packageToCheckPath = opt.packageToCheckPath ?? process.cwd();
-  
+
   console.log('Checking packages in package:', opt.packageToCheckPath);
   if (opt.licenseOverridesPath) {
     console.log('Using license overrides from:', opt.licenseOverridesPath);
@@ -53,7 +127,7 @@ export function collectLicenses(opt: Options) {
     },
     excludePrivatePackages: true,
     exclude: (opt.excludedSPDXLicenses ?? []).join(',') as any, // the @types/license-checker is wrong, it should be a string
-    excludePackages: (opt.excludedPackages ?? []).map(o => `${o.name}@${o.version}`).join(';'),
+    excludePackages: (opt.excludedPackages ?? []).join(';'),
   }, async (err, packages): Promise<void> => {
     if (err) {
       console.error('Failed to find licenses:', err);
@@ -104,7 +178,7 @@ export function collectLicenses(opt: Options) {
       publisher: p.publisher,
       licenses: typeof p.licenses === 'string' ? [p.licenses] : p.licenses,
       licenseText: p.licenseText,
-    })), null, 2);
+    } as LicensedPackageData)), null, 2);
 
     fs.writeFileSync(opt.outputFilePath, jsonContent);
     console.log('Written to:', opt.outputFilePath);
@@ -134,8 +208,8 @@ const overrideLicense = (p: checker.ModuleInfo, licensesOverrideBasePath: string
   };
 };
 
-const readmeRegex = /^README(|\.md|\.markdown)$/i;
-const isReadmeFile = (filePath: string): boolean => readmeRegex.test(path.basename(filePath));
+const readmeRegex = /^README(|\.txt|\.md|\.markdown)$/i;
+const isReadmeFile = (filePath: string): boolean => filePath ? readmeRegex.test(path.basename(filePath)) : false;
 const licensePossibleFileNames = [
   'LICENSE',
   'LICENSE.md',
