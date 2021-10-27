@@ -63,7 +63,7 @@ export interface Options {
    *
    * @example
    * collectLicenses({
-   *   excludedSPDSLicenses: [
+   *   excludedSPDXLicenses: [
    *     "0BSD", // The 0BSD license requires no attribution.
    *   ],
    * });
@@ -102,8 +102,9 @@ const cachedFetch = new CachedFetch();
 
 export function collectLicenses(opt?: Options) {
   opt = opt ?? {};
-  opt.outputFilePath = opt.outputFilePath ?? path.join(process.cwd(), 'licenses.json');
-  opt.packageToCheckPath = opt.packageToCheckPath ?? process.cwd();
+  opt.outputFilePath = opt.outputFilePath ? path.resolve(opt.outputFilePath) : path.join(process.cwd(), 'licenses.json');
+  opt.packageToCheckPath = opt.packageToCheckPath ? path.resolve(opt.packageToCheckPath) : process.cwd();
+  opt.licenseOverridesPath = opt.licenseOverridesPath ? path.resolve(opt.licenseOverridesPath) : null;
 
   console.log('Checking packages in package:', opt.packageToCheckPath);
   if (opt.licenseOverridesPath) {
