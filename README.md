@@ -1,4 +1,6 @@
-# wharf-collect-licenses
+# wharf-collect-licenses-js
+
+[![NPM package](https://img.shields.io/npm/v/@iver-wharf/wharf-collect-licenses?logo=npm)](https://npmjs.com/package/@iver-wharf/wharf-collect-licenses)
 
 Collects licenses from `node_modules` and GitHub and outputs license texts and
 metadata in JSON format.
@@ -6,10 +8,6 @@ metadata in JSON format.
 Extends [`license-checker`](https://github.com/davglass/license-checker) with
 better filtering, validation, and fetching licenses from GitHub.com if the
 license text is missing from the `node_modules` folder.
-
-## NPM package
-
-Found here: <https://npmjs.com/package/@iver-wharf/wharf-collect-licenses>
 
 ## Usage
 
