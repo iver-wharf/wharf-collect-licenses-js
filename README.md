@@ -7,6 +7,10 @@ Extends [`license-checker`](https://github.com/davglass/license-checker) with
 better filtering, validation, and fetching licenses from GitHub.com if the
 license text is missing from the `node_modules` folder.
 
+## NPM package
+
+Found here: <https://npmjs.com/package/@iver-wharf/wharf-collect-licenses>
+
 ## Usage
 
 1. First install:
