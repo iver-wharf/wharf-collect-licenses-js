@@ -1,0 +1,49 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "ignorePatterns": ["dist/**/*"],
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "plugins": [
+                "@typescript-eslint"
+            ],
+            "parser": "@typescript-eslint/parser",
+            "parserOptions": {
+                "project": ["tsconfig.json"],
+                "createDefaultProgram": true
+            },
+            "extends": [
+                "eslint:recommended",
+                "plugin:@typescript-eslint/recommended"
+            ],
+            "rules": {
+                "quotes": ["warn", "single"],
+                "@typescript-eslint/consistent-type-definitions": "error",
+                "@typescript-eslint/explicit-member-accessibility": [
+                    "off",
+                    {
+                        "accessibility": "explicit"
+                    }
+                ],
+                "arrow-parens": ["off", "always"],
+                "brace-style": ["error", "1tbs"],
+                "import/order": "off",
+                "no-shadow": "off",
+                "@typescript-eslint/no-shadow": "error",
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    { "selector": "default", "format": ["camelCase"], "leadingUnderscore": "allow", "trailingUnderscore": "allow" },
+                    { "selector": "variable", "format": ["camelCase", "UPPER_CASE"], "leadingUnderscore": "allow", "trailingUnderscore": "allow" },
+                    { "selector": "typeLike", "format": ["PascalCase"], "leadingUnderscore": "allow", "trailingUnderscore": "allow" },
+                    { "selector": "enumMember", "format": ["PascalCase"] }
+                ],
+                "comma-dangle": ["error", "always-multiline"]
+            }
+
+        }
+    ]
+}
