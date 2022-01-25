@@ -2,8 +2,8 @@ import checker from 'license-checker';
 import { exit } from 'process';
 import fs from 'fs';
 import path from 'path';
-import { CachedFetch } from './cached-fetch';
-import { Options, LicensedPackageData } from './types';
+import { CachedFetch } from './cached-fetch.js';
+import { Options, LicensedPackageData } from './types.js';
 
 const cachedFetch = new CachedFetch();
 

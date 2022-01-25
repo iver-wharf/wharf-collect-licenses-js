@@ -1,6 +1,6 @@
 // Used in {@link} comment
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { collectLicenses } from './collect';
+import { collectLicenses } from './collect.js';
 
 export interface ErrorOnPackage {
   name: string;
