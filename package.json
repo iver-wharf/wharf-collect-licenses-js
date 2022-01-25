@@ -1,6 +1,6 @@
 {
   "name": "@iver-wharf/wharf-collect-licenses",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Collects licenses from node_modules and GitHub and outputs license texts and metadata in JSON format",
   "scripts": {
     "build": "tsc --build tsconfig.json",
