@@ -12,6 +12,11 @@ This project tries to follow [SemVer 2.0.0](https://semver.org/).
 	https://changelog.md/
 -->
 
-## v1.0.0 (WIP)
+## v1.0.1 (2022-01-25)
+
+- Security: Changed version of node-fetch from 2.6.5 to 3.2.0 for
+  [CVE-2022-0235](https://nvd.nist.gov/vuln/detail/CVE-2022-0235). (#3)
+
+## v1.0.0 (2021-11-05)
 
 - Initial release. (#2)
