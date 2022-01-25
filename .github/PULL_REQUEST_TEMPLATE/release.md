@@ -1,4 +1,5 @@
 - \[ ] I've updated the `(WIP)` tag to today's date in `CHANGELOG.md`
+- \[ ] I've updated the `"version"` field in `package.json`
 - \[ ] I've added the `release` label to this PR
 
 ## Changes
