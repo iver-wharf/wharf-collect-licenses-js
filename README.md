@@ -14,13 +14,13 @@ license text is missing from the `node_modules` folder.
 1. First install:
 
    ```console
-   $ npm install --save-dev @iver-wharf/wharf-collect-licenses
+   $ npm install --save-dev @iver-wharf/wharf-collect-licenses@2
    ```
 
 2. Then write a simple JavaScript file to use it:
 
    ```js
-   // collect-licenses.js
+   // collect-licenses.mjs
 
    const { collectLicenses } = require('@iver-wharf/wharf-collect-licenses');
 
@@ -45,7 +45,7 @@ license text is missing from the `node_modules` folder.
 3. Then run it via Node:
 
    ```console
-   $ node collect-licenses.js
+   $ node collect-licenses.mjs
 
    Checking packages in package: /home/me/code/wharf/wharf-web
    Using license overrides from: /home/me/code/wharf/wharf-web/deploy/collect-licenses/licenses_override

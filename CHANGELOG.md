@@ -12,6 +12,14 @@ This project tries to follow [SemVer 2.0.0](https://semver.org/).
 	https://changelog.md/
 -->
 
+## v2.0.0 (WIP)
+
+- BREAKING: Changed package to ES module to stay compatible with node-fetch.
+  This drops support for usage by CommonJS modules. (#6)
+
+  If importing this package in a script file, a quick fix is to rename the file
+  from `myscript.js` to `myscript.mjs`, and then run `node myscript.mjs`.
+
 ## v1.0.1 (2022-01-25)
 
 - Security: Changed version of node-fetch from 2.6.5 to 3.2.0 for
