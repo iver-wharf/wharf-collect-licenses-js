@@ -12,7 +12,7 @@ This project tries to follow [SemVer 2.0.0](https://semver.org/).
 	https://changelog.md/
 -->
 
-## v2.0.0 (WIP)
+## v2.0.0 (2022-01-28)
 
 - BREAKING: Changed package to ES module to stay compatible with node-fetch.
   This drops support for usage by CommonJS modules. (#6)
