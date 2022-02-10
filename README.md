@@ -113,6 +113,8 @@ The resulting JSON file contains the following format:
 ## Linting
 
 ```sh
+make deps # download linting dependencies
+
 make lint
 
 make lint-ts # only lint TypeScript code
