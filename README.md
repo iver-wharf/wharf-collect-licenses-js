@@ -110,6 +110,27 @@ The resulting JSON file contains the following format:
 ]
 ```
 
+## Linting
+
+```sh
+make deps # download linting dependencies
+
+make lint
+
+make lint-ts # only lint TypeScript code
+make lint-md # only lint Markdown files
+```
+
+Some errors can be fixed automatically. Keep in mind that this updates the
+files in place.
+
+```sh
+make lint-fix
+
+make lint-fix-ts # only lint and fix TypeScript files
+make lint-fix-md # only lint and fix Markdown files
+```
+
 ---
 
 Maintained by [Iver](https://www.iver.com/en).
